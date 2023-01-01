@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import ErrorPage from './pages/Error';
+import { PUBLIC_ROUTES } from './routes';
+import { HOME_PATH } from './routes/constants/urls';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Routes>
+			<Route path={HOME_PATH}>
+				{/* Public Routes */}
+				{PUBLIC_ROUTES.map(({ path, element }) => {
+					return <Route key={path} path={path} element={element} />;
+				})}
+				<Route path="/*" element={<ErrorPage status={404} />} />
+			</Route>
+		</Routes>
+	);
 }
 
 export default App;
