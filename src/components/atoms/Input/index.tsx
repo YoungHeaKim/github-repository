@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { ThemeType } from '../../../styles/theme';
+import { colors } from '../../../constants';
 import Typo from '../Typo';
 
 export type InputType = 'text' | 'password' | 'number';
@@ -66,24 +66,24 @@ const getInputSize = (size: InputSize) => {
 	`;
 };
 
-const getInputStatus = (inputStatus: InputStatus, theme: ThemeType) => {
+const getInputStatus = (inputStatus: InputStatus) => {
 	let status;
 	let color;
 	let outline;
 	switch (inputStatus) {
 		case 'error':
-			status = theme.common.colors.danger_1;
-			color = theme.common.colors.gray_1;
-			outline = theme.common.colors.danger_1;
+			status = colors.PRIMARY1;
+			color = colors.RED1;
+			outline = colors.RED1;
 			break;
 		case 'success':
-			status = theme.common.colors.success_1;
-			color = theme.common.colors.gray_1;
-			outline = theme.common.colors.success_1;
+			status = colors.BLUE1;
+			color = colors.GRAY1;
+			outline = colors.BLUE1;
 			break;
 		case 'normal':
-			status = theme.common.colors.gray_1;
-			color = theme.common.colors.gray_1;
+			status = colors.GRAY1;
+			color = colors.GRAY1;
 			outline = 'none';
 			break;
 		default:
@@ -112,7 +112,7 @@ const StyledInput = styled.input<{ inputRadius: InputRadius }>`
 	${({ inputRadius }) => getInputRadius(inputRadius)};
 
 	&::placeholder {
-		color: ${({ theme }) => theme.common.colors.gray_1};
+		color: ${colors.GRAY1};
 		${({ theme }) => theme.typo.input2};
 	}
 
@@ -121,7 +121,7 @@ const StyledInput = styled.input<{ inputRadius: InputRadius }>`
 	}
 
 	&::placeholder {
-		color: ${({ theme }) => theme.common.colors.gray_1};
+		color: ${colors.GRAY1};
 		${({ theme }) => theme.typo.input2};
 	}
 `;
@@ -141,23 +141,23 @@ const InputContainer = styled.div<InputStyleProps>`
 
 	${({ theme }) => theme.typo.input2};
 	${({ inputRadius }) => getInputRadius(inputRadius)};
-	${({ inputStatus, theme }) => getInputStatus(inputStatus, theme)};
+	${({ inputStatus }) => getInputStatus(inputStatus)};
 	${({ inputSize }) => getInputSize(inputSize)};
 	${({ isDisabled }) =>
 		isDisabled &&
 		css`
-			background: ${({ theme }) => theme.common.colors.gray_1};
-			border: 1px solid ${({ theme }) => theme.common.colors.gray_1};
+			background: ${colors.GRAY1};
+			border: 1px solid ${colors.GRAY1};
 			cursor: not-allowed;
 		`}
 
 	&:hover {
-		border: 1px solid ${({ theme }) => theme.common.colors.primary_6_main};
-		box-shadow: 0 0 0 2px ${({ theme }) => theme.common.colors.primary_1};
+		border: 1px solid ${colors.PRIMARY6};
+		box-shadow: 0 0 0 2px ${colors.PRIMARY1};
 	}
 
 	&:focus-within {
-		border: 1px solid ${({ theme }) => theme.common.colors.primary_6_main};
+		border: 1px solid ${colors.PRIMARY6};
 		box-shadow: none;
 	}
 
@@ -191,8 +191,8 @@ const InputContainer = styled.div<InputStyleProps>`
 		display: flex;
 		align-items: center;
 		height: 100%;
-		color: ${({ theme }) => theme.common.colors.gray_1};
-		background-color: ${({ theme }) => theme.common.colors.gray_1};
+		color: ${colors.GRAY1};
+		background-color: ${colors.GRAY1};
 		border-bottom-right-radius: ${({ inputSize }) =>
 			inputSize === 'large' ? '12px' : '7px'};
 		border-top-right-radius: ${({ inputSize }) =>
@@ -243,7 +243,7 @@ function Input({
 			<div className="input-icon-unit-container">
 				{!!unitText && (
 					<span className="input-unit">
-						<Typo typoType="input2" color="gray_1">
+						<Typo typoType="input2" color={colors.GRAY1}>
 							{unitText}
 						</Typo>
 					</span>

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Input } from '../../components/atoms';
+import React from 'react';
 import { Header } from '../../components/molecules';
-import { strings } from '../../constants';
 // import { Radio, Row } from 'antd';
 // import TextArea from '../../components/atoms/TextArea';
 // import Input from '../../components/atoms/Input';
@@ -21,22 +19,13 @@ import { strings } from '../../constants';
 //   text-align: center;
 // `;
 
-function HomePage() {
-	const [search, setSearch] = useState<string>('');
-
+function PostPage() {
 	return (
 		<div style={{ flex: 1, border: '1px solid' }}>
-			<Header pageName="Home" />
-			<Input
-				value={search}
-				onChange={({ target }) => setSearch(target.value)}
-				name=""
-				type="text"
-				placeholder={strings.INPUT_PLACE_HOLDER}
-			/>
+			<Header pageName="Post" />
 		</div>
 	);
 }
 
-export default HomePage;
-HomePage.defaultProps = { status: undefined };
+export default PostPage;
+PostPage.defaultProps = { status: undefined };

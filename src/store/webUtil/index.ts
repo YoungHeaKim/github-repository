@@ -1,25 +1,25 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface WebUtilState {
-  fullLoading: boolean;
+	fullLoading: boolean;
 }
 
 const initialState: WebUtilState = {
-  fullLoading: false,
+	fullLoading: false,
 };
 
 const webUtilSlice = createSlice({
-  name: "webUtil",
-  initialState,
-  reducers: {
-    fullLoadingOn(state: WebUtilState) {
-      state.fullLoading = true;
-    },
-    fullLoadingOff(state: WebUtilState) {
-      state.fullLoading = false;
-    },
-  },
+	name: 'webUtil',
+	initialState,
+	reducers: {
+		fullLoadingOn(state: WebUtilState) {
+			state.fullLoading = true;
+		},
+		fullLoadingOff(state: WebUtilState) {
+			state.fullLoading = false;
+		},
+	},
 });
 
 export const { fullLoadingOn, fullLoadingOff } = webUtilSlice.actions;

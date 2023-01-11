@@ -1,10 +1,21 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import ErrorPage from './pages/Error';
 import { PUBLIC_ROUTES } from './routes';
-import { HOME_PATH } from './routes/constants/urls';
+import { ERROR_PATH, HOME_PATH } from './routes/constants/urls';
 
 function App() {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const url = window.location.href;
+		const pathName = new URL(url).pathname;
+		const notFound = PUBLIC_ROUTES.find(({ path }) => path !== pathName);
+		if (notFound === undefined) {
+			navigate(ERROR_PATH);
+		}
+	}, [navigate]);
+
 	return (
 		<Routes>
 			<Route path={HOME_PATH}>

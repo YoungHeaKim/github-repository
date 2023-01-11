@@ -1,8 +1,8 @@
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
-import "antd/dist/antd.min.css";
-import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+import 'antd/dist/antd.min.css';
+import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 
 const GlobalStyle = createGlobalStyle`
     ${reset}

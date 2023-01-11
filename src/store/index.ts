@@ -1,37 +1,37 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import storage from "redux-persist/lib/storage";
-import webUtilReducer from "./webUtil";
+	persistReducer,
+	FLUSH,
+	REHYDRATE,
+	PAUSE,
+	PERSIST,
+	PURGE,
+	REGISTER,
+} from 'redux-persist';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import storage from 'redux-persist/lib/storage';
+import webUtilReducer from './webUtil';
 
 const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["auth", "debugPath"],
+	key: 'root',
+	storage,
+	whitelist: ['auth', 'debugPath'],
 };
 
 const reducers = combineReducers({
-  webUtil: webUtilReducer,
+	webUtil: webUtilReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat([]),
+	reducer: persistedReducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		}).concat([]),
 });
 
 setupListeners(store.dispatch);
