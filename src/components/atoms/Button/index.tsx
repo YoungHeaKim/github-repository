@@ -78,6 +78,7 @@ const ButtonLayuout = styled.button<ButtonStyleProps>`
 	${({ theme, size, buttonType }) =>
 		css`
 			${theme.button.size[size]}
+			${buttonType === 'under_line' && 'border-radius: 0'};
 			color: ${theme.button.buttonType[buttonType].defaultStateStyle.color};
 			background-color: ${theme.button.buttonType[buttonType].defaultStateStyle
 				.backgroundColor};
@@ -86,6 +87,8 @@ const ButtonLayuout = styled.button<ButtonStyleProps>`
 			text-decoration: ${theme.button.buttonType[buttonType].underLine
 				? 'underline'
 				: 'none'};
+			border-bottom: ${theme.button.buttonType[buttonType].defaultStateStyle
+				.borderBottom};
 
 			&:hover {
 				color: ${theme.button.buttonType[buttonType].hoverStateStyle.color};
@@ -94,6 +97,8 @@ const ButtonLayuout = styled.button<ButtonStyleProps>`
 				border: 1px solid
 					${theme.button.buttonType[buttonType].hoverStateStyle.borderColor};
 				opacity: 0.3;
+				border-bottom: ${theme.button.buttonType[buttonType].hoverStateStyle
+					.borderBottom};
 			}
 			&:active {
 				color: ${theme.button.buttonType[buttonType].pressedStateStyle.color};
@@ -101,6 +106,8 @@ const ButtonLayuout = styled.button<ButtonStyleProps>`
 					.pressedStateStyle.backgroundColor};
 				border: 1px solid
 					${theme.button.buttonType[buttonType].pressedStateStyle.borderColor};
+				border-bottom: ${theme.button.buttonType[buttonType].pressedStateStyle
+					.borderBottom};
 			}
 			&:disabled {
 				color: ${theme.button.buttonType[buttonType].disabledStateStyle.color};
@@ -108,6 +115,8 @@ const ButtonLayuout = styled.button<ButtonStyleProps>`
 					.disabledStateStyle.backgroundColor};
 				border: 1px solid
 					${theme.button.buttonType[buttonType].disabledStateStyle.borderColor};
+				border-bottom: ${theme.button.buttonType[buttonType].disabledStateStyle
+					.borderBottom};
 			}
 		`}
 `;

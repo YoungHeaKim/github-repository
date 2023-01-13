@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../../components/atoms';
 import { Header } from '../../components/molecules';
 import { strings } from '../../constants';
-// import { Radio, Row } from 'antd';
-// import TextArea from '../../components/atoms/TextArea';
-// import Input from '../../components/atoms/Input';
-// import Typo from '../../components/atoms/Typo';
-// import Button from '../../components/atoms/Button';
-// import Editor from '../../components/atoms/Editor';
+import * as Styled from './styles';
 
 // const Main = styled.main`
 //   display: flex;
@@ -25,16 +20,18 @@ function HomePage() {
 	const [search, setSearch] = useState<string>('');
 
 	return (
-		<div style={{ flex: 1, border: '1px solid' }}>
+		<Styled.BodyView>
 			<Header pageName="Home" />
-			<Input
-				value={search}
-				onChange={({ target }) => setSearch(target.value)}
-				name=""
-				type="text"
-				placeholder={strings.INPUT_PLACE_HOLDER}
-			/>
-		</div>
+			<header style={{ margin: '0 20px' }}>
+				<Input
+					value={search}
+					onChange={({ target }) => setSearch(target.value)}
+					name=""
+					type="text"
+					placeholder={strings.INPUT_PLACE_HOLDER}
+				/>
+			</header>
+		</Styled.BodyView>
 	);
 }
 

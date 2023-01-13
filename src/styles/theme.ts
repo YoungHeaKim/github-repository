@@ -313,34 +313,60 @@ const getButtonSizeStyle = (type: ButtonSizeType) => {
 
 export enum ButtonTypeType {
 	PRIMARY = 'primary',
+	UNDER_LINE = 'under_line',
+}
+
+interface ButtonDefaultType {
+	color: string;
+	backgroundColor: string;
+	borderColor: string;
+	borderBottom: string | number;
 }
 
 const getButtonTypeStyle = (type: ButtonTypeType) => {
-	const defaultStateStyle = {
+	const defaultStateStyle: ButtonDefaultType = {
 		color: colors.GRAY7,
 		backgroundColor: colors.GRAY3,
 		borderColor: colors.NONE,
+		borderBottom: 0,
 	};
-	const hoverStateStyle = {
+	const hoverStateStyle: ButtonDefaultType = {
 		color: colors.GRAY7,
 		backgroundColor: colors.GRAY3,
 		borderColor: colors.NONE,
+		borderBottom: 0,
 	};
-	const pressedStateStyle = {
+	const pressedStateStyle: ButtonDefaultType = {
 		color: colors.GRAY7,
 		backgroundColor: colors.GRAY1,
 		borderColor: colors.NONE,
+		borderBottom: 0,
 	};
-	const disabledStateStyle = {
+	const disabledStateStyle: ButtonDefaultType = {
 		color: colors.GRAY2,
 		backgroundColor: colors.GRAY6,
 		borderColor: colors.NONE,
+		borderBottom: 0,
 	};
 
 	const underLine = false;
 
 	switch (type) {
 		case 'primary':
+			break;
+		case 'under_line':
+			defaultStateStyle.color = colors.GRAY2;
+			defaultStateStyle.backgroundColor = colors.NONE;
+			defaultStateStyle.borderBottom = `2px solid ${colors.GRAY1}`;
+			hoverStateStyle.color = colors.GRAY5;
+			hoverStateStyle.backgroundColor = colors.NONE;
+			hoverStateStyle.borderBottom = `1px solid ${colors.GRAY1}`;
+			pressedStateStyle.color = colors.GRAY2;
+			pressedStateStyle.backgroundColor = colors.NONE;
+			pressedStateStyle.borderBottom = `1px solid ${colors.GRAY1}`;
+			disabledStateStyle.color = colors.GRAY5;
+			disabledStateStyle.backgroundColor = colors.NONE;
+			disabledStateStyle.borderBottom = `3px solid ${colors.BLUE}`;
 			break;
 		default:
 			break;
@@ -413,6 +439,7 @@ const theme = {
 		},
 		buttonType: {
 			primary: getButtonTypeStyle(ButtonTypeType.PRIMARY),
+			under_line: getButtonTypeStyle(ButtonTypeType.UNDER_LINE),
 		},
 	},
 };

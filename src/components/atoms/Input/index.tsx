@@ -191,8 +191,8 @@ const InputContainer = styled.div<InputStyleProps>`
 		display: flex;
 		align-items: center;
 		height: 100%;
-		color: ${colors.GRAY1};
-		background-color: ${colors.GRAY1};
+		color: ${colors.GRAY3};
+		background-color: ${colors.GRAY3};
 		border-bottom-right-radius: ${({ inputSize }) =>
 			inputSize === 'large' ? '12px' : '7px'};
 		border-top-right-radius: ${({ inputSize }) =>
