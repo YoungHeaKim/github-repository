@@ -10,7 +10,6 @@ export type InputStatus = 'success' | 'error' | 'normal';
 
 export interface InputProps {
 	name: string;
-
 	isDisabled?: boolean;
 	type: InputType;
 	inputRadius?: InputRadius;

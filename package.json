@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@octokit/rest": "^19.0.5",
+    "@octokit/types": "^8.1.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -17,8 +19,11 @@
     "antd": "^4.23.0",
     "axios": "^1.2.1",
     "formik": "^2.2.9",
+    "lodash": "4.17.21",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.5.0",
@@ -55,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",

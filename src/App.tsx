@@ -6,15 +6,15 @@ import { ERROR_PATH, HOME_PATH } from './routes/constants/urls';
 
 function App() {
 	const navigate = useNavigate();
+	const url = window.location.href;
+	const pathName = new URL(url).pathname;
 
 	useEffect(() => {
-		const url = window.location.href;
-		const pathName = new URL(url).pathname;
 		const notFound = PUBLIC_ROUTES.find(({ path }) => path !== pathName);
 		if (notFound === undefined) {
 			navigate(ERROR_PATH);
 		}
-	}, [navigate]);
+	}, [navigate, pathName]);
 
 	return (
 		<Routes>

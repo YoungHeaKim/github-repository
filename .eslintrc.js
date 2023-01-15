@@ -21,24 +21,18 @@ module.exports = {
 	rules: {
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': ['error'],
+		'react-hooks/exhaustive-deps': 'off',
 		'no-shadow': 'off',
 		'@typescript-eslint/no-shadow': ['error'],
 		'react/jsx-props-no-spreading': 0,
 		'import/prefer-default-export': 'off',
+		'import/extensions': 'off',
+		'import/no-unresolved': 'off',
+		'import/no-cycle': 'off',
 		'react/jsx-filename-extension': [
 			2,
 			{
 				extensions: ['.js', '.jsx', '.ts', '.tsx'],
-			},
-		],
-		'import/extensions': [
-			2,
-			'ignorePackages',
-			{
-				js: 'never',
-				jsx: 'never',
-				ts: 'never',
-				tsx: 'never',
 			},
 		],
 		'prettier/prettier': 'error',

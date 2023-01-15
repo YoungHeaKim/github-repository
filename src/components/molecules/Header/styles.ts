@@ -3,7 +3,7 @@ import { Button, Row } from '../../atoms';
 
 export const HeaderRow = styled(Row)`
 	justify-content: space-between;
-	padding: 10px 20px;
+	padding: 10px 40px;
 `;
 
 export const LinkTypo = styled(Button)`

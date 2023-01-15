@@ -20,7 +20,25 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "paths": {
+    "@assets/*": [
+      "assets/*"
+    ],
+    "@src/*": [
+      "src/*"
+    ],
+    "@components/*": [
+      "src/components/*"
+    ],
+    "@data/*": [
+      "src/data/*"
+    ],
+    "@hooks/*": [
+      "src/hooks/*"
+    ],
+    "@pages/*": [
+      "src/pages/*"
+    ],
+  },
+  "include": [ "src", "babel.config.js" ]
 }
