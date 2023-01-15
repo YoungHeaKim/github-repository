@@ -25,7 +25,7 @@ const Main = styled.main`
 
 function HomePage() {
 	const octokit = new Octokit({
-		auth: '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',
+		auth: '',
 	});
 	const [search, setSearch] = useState<string>('');
 	const { setUser } = useAuthActions();
@@ -33,7 +33,7 @@ function HomePage() {
 	const [debounceSearch, setDebounceSearch] = useDebounce(search);
 
 	const getUser = async () => {
-		const token = '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';
+		const token = '';
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
