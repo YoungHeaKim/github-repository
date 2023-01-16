@@ -35,7 +35,7 @@ function HomePage() {
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(10);
 	const [debounceSearch, setDebounceSearch] = useDebounce(search);
-	const [selects, setSelects] = useState<any[]>([]);
+	// const [selects, setSelects] = useState<any[]>([]);
 	const navigate = useNavigate();
 
 	// eslint-disable-next-line consistent-return
