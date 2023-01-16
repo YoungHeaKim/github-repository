@@ -29,6 +29,8 @@ module.exports = {
 		'import/extensions': 'off',
 		'import/no-unresolved': 'off',
 		'import/no-cycle': 'off',
+		'no-nested-ternary': 'off',
+		'react/no-array-index-key': 'off',
 		'react/jsx-filename-extension': [
 			2,
 			{
