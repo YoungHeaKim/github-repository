@@ -57,14 +57,17 @@ function PostPage() {
 		...commonReactQueryOptions,
 	});
 
+	const renderEmptyView = () =>
+		isFetching || isLoading ? (
+			<ReactLoading type="balls" color="#0000FF" height={100} width={50} />
+		) : (
+			<div>데이터 없음</div>
+		);
+
 	return (
 		<DefaultLayOut headerTitle={`${fullName[0]}의 ${fullName[1]} Issues`}>
 			{isEmpty(issues) ? (
-				isFetching || isLoading ? (
-					<ReactLoading type="balls" color="#0000FF" height={100} width={50} />
-				) : (
-					<div>데이터 없음</div>
-				)
+				renderEmptyView()
 			) : (
 				<ol>
 					{issues.map(

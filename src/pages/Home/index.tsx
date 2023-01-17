@@ -5,13 +5,13 @@ import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { Pagination } from 'antd';
 import ReactLoading from 'react-loading';
-import { useNavigate } from 'react-router-dom';
 import { Button, Input, Row } from '../../components/atoms';
 import { DefaultLayOut } from '../../components/oraganisms';
 import { colors, commonReactQueryOptions, strings } from '../../constants';
 import { logError } from '../../utils/utils';
 import useDebounce from '../../hooks/useDebounce';
-import { ISSUE_PATH } from '../../routes/constants/urls';
+import { Repo } from '../../types/repo';
+import RepoListItem from '../../components/templates/RepoListItem';
 
 const Main = styled.main`
 	display: flex;
@@ -35,8 +35,6 @@ function HomePage() {
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(10);
 	const [debounceSearch, setDebounceSearch] = useDebounce(search);
-	// const [selects, setSelects] = useState<any[]>([]);
-	const navigate = useNavigate();
 
 	// eslint-disable-next-line consistent-return
 	const getRepos = async (): Promise<any> => {
@@ -80,7 +78,15 @@ function HomePage() {
 				<ReactLoading type="balls" color="#0000FF" height={100} width={50} />
 			</div>
 		) : (
-			<li style={{ display: 'flex', width: '100%', padding: '10px 10px' }}>
+			<li
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					width: '100%',
+					padding: '10px 10px',
+				}}
+			>
 				데이터 없음
 			</li>
 		);
@@ -94,7 +100,7 @@ function HomePage() {
 					margin: '10px 40px 0',
 				}}
 			>
-				<div style={{ width: '50%' }}>
+				<div style={{ width: '50%', position: 'relative', margin: '0 auto' }}>
 					<Input
 						value={search}
 						onChange={({ target }) => {
@@ -105,6 +111,24 @@ function HomePage() {
 						type="text"
 						placeholder={strings.INPUT_PLACE_HOLDER}
 					/>
+					{search !== '' && (
+						<Button
+							style={{
+								backgroundColor: colors.NONE,
+								position: 'absolute',
+								top: 0,
+								right: 0,
+								color: colors.GRAY2,
+							}}
+							size="small"
+							onClick={() => {
+								setSearch('');
+								setDebounceSearch('');
+							}}
+						>
+							X
+						</Button>
+					)}
 				</div>
 			</header>
 			<Main>
@@ -117,93 +141,32 @@ function HomePage() {
 						}}
 					>
 						<RowView>
-							<div style={{ width: '5%' }}>선택여부</div>
-							<div style={{ width: '20%' }}>이미지</div>
-							<div style={{ width: '30%' }}>Repository 이름</div>
-							<div style={{ width: '20%' }}>Fork 수</div>
-							<div style={{ width: '40%' }}>버튼</div>
+							<div style={{ width: '10%' }}>선택여부</div>
+							<div style={{ width: '10%', borderLeft: '1px solid' }}>
+								이미지
+							</div>
+							<div style={{ width: '35%', borderLeft: '1px solid' }}>
+								Repository 이름
+							</div>
+							<div style={{ width: '15%', borderLeft: '1px solid' }}>
+								Fork 수
+							</div>
+							<div style={{ width: '30%', borderLeft: '1px solid' }}>버튼</div>
 						</RowView>
 					</li>
 					{!isEmpty(repos)
-						? repos.items.map(
-								(item: {
-									id: number;
-									owner: { avatar_url: string };
-									full_name: string;
-									forks_count: number;
-									html_url: string;
-								}) => (
-									<li
-										key={item.id}
-										style={{
-											borderBottom: '1px solid',
-											width: '100%',
-											padding: '10px 10px',
-										}}
-									>
-										<RowView>
-											<div
-												style={{
-													width: '20%',
-													display: 'flex',
-													justifyContent: 'center',
-												}}
-											>
-												<img
-													src={item.owner.avatar_url}
-													width={20}
-													height={20}
-													alt=""
-												/>
-											</div>
-											<div
-												style={{
-													width: '30%',
-													display: 'flex',
-													justifyContent: 'center',
-												}}
-											>
-												{item.full_name}
-											</div>
-											<div
-												style={{
-													width: '20%',
-													display: 'flex',
-													justifyContent: 'center',
-												}}
-											>
-												{item.forks_count}
-											</div>
-											<Row
-												style={{
-													width: '40%',
-													display: 'flex',
-													justifyContent: 'center',
-												}}
-											>
-												<Button
-													size="small"
-													onClick={() => window.open(item.html_url, '_blank')}
-												>
-													Github으로 이동
-												</Button>
-												<Button
-													size="small"
-													style={{ marginLeft: 10 }}
-													onClick={() =>
-														navigate({
-															pathname: ISSUE_PATH,
-															search: `?repo=${item.full_name}`,
-														})
-													}
-												>
-													issue 보기
-												</Button>
-											</Row>
-										</RowView>
-									</li>
-								),
-						  )
+						? repos.items.map((item: Repo) => (
+								<li
+									key={item.id}
+									style={{
+										borderBottom: '1px solid',
+										width: '100%',
+										padding: '10px 10px',
+									}}
+								>
+									<RepoListItem repo={item} isSelect />
+								</li>
+						  ))
 						: renderEmptyView()}
 				</ul>
 				<div>

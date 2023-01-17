@@ -10,15 +10,17 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import auth from '../slices/auth';
+import repo from '../slices/repo';
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['auth', 'debugPath'],
+	whitelist: ['auth', 'repo', 'debugPath'],
 };
 
 export const rootReducer = combineReducers({
 	auth,
+	repo,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

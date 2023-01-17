@@ -313,7 +313,9 @@ const getButtonSizeStyle = (type: ButtonSizeType) => {
 
 export enum ButtonTypeType {
 	PRIMARY = 'primary',
+	DELETE = 'delete',
 	UNDER_LINE = 'under_line',
+	TEXT = 'text',
 }
 
 interface ButtonDefaultType {
@@ -354,6 +356,16 @@ const getButtonTypeStyle = (type: ButtonTypeType) => {
 	switch (type) {
 		case 'primary':
 			break;
+		case 'delete':
+			defaultStateStyle.color = colors.GRAY7;
+			defaultStateStyle.backgroundColor = colors.PRIMARY;
+			hoverStateStyle.color = colors.GRAY7;
+			hoverStateStyle.backgroundColor = colors.PRIMARY;
+			pressedStateStyle.color = colors.GRAY7;
+			pressedStateStyle.backgroundColor = colors.PRIMARY;
+			disabledStateStyle.color = colors.GRAY7;
+			disabledStateStyle.backgroundColor = colors.PRIMARY;
+			break;
 		case 'under_line':
 			defaultStateStyle.color = colors.GRAY2;
 			defaultStateStyle.backgroundColor = colors.NONE;
@@ -367,6 +379,16 @@ const getButtonTypeStyle = (type: ButtonTypeType) => {
 			disabledStateStyle.color = colors.GRAY5;
 			disabledStateStyle.backgroundColor = colors.NONE;
 			disabledStateStyle.borderBottom = `3px solid ${colors.BLUE}`;
+			break;
+		case 'text':
+			defaultStateStyle.color = colors.GRAY2;
+			defaultStateStyle.backgroundColor = colors.NONE;
+			hoverStateStyle.color = colors.GRAY5;
+			hoverStateStyle.backgroundColor = colors.NONE;
+			pressedStateStyle.color = colors.GRAY2;
+			pressedStateStyle.backgroundColor = colors.NONE;
+			disabledStateStyle.color = colors.GRAY5;
+			disabledStateStyle.backgroundColor = colors.NONE;
 			break;
 		default:
 			break;
@@ -439,7 +461,9 @@ const theme = {
 		},
 		buttonType: {
 			primary: getButtonTypeStyle(ButtonTypeType.PRIMARY),
+			delete: getButtonTypeStyle(ButtonTypeType.DELETE),
 			under_line: getButtonTypeStyle(ButtonTypeType.UNDER_LINE),
+			text: getButtonTypeStyle(ButtonTypeType.TEXT),
 		},
 	},
 };

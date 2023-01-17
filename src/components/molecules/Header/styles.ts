@@ -7,6 +7,6 @@ export const HeaderRow = styled(Row)`
 `;
 
 export const LinkTypo = styled(Button)`
-	width: 100px;
+	min-width: 100px;
 	margin-left: 20px;
 `;

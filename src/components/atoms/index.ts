@@ -4,3 +4,4 @@ export { default as TextArea } from './TextArea';
 export { default as Typo } from './Typo';
 export { default as Editor } from './Editor';
 export { default as Row } from './Row';
+export { default as Checkbox } from './Checkbox';

@@ -111,7 +111,7 @@ const StyledInput = styled.input<{ inputRadius: InputRadius }>`
 	${({ inputRadius }) => getInputRadius(inputRadius)};
 
 	&::placeholder {
-		color: ${colors.GRAY1};
+		color: ${colors.GRAY6};
 		${({ theme }) => theme.typo.input2};
 	}
 
