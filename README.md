@@ -14,3 +14,7 @@
 - 내 웹에서 Repo 저장 삭제 기능 (저장은 최대 4개까지 가능)
 - 저장된 Repo 이슈 리스트 보기
 - 검색된 Repo 이슈 개별 모아보기
+
+## 구동 방법
+
+`Git clone https://github.com/YoungHeaKim/github-repository.git` -> `cd 프로젝트 이름` -> `npm i` -> `npm start` 
