@@ -1,25 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { circleCheckIcon, circleCheckNoneIcon } from '../../../assets/icon';
 import { strings } from '../../../constants';
-import useRepo from '../../../hooks/useRepo';
-import useRepoActions from '../../../hooks/useRepoActions';
+import { useRepo, useRepoActions } from '../../../hooks';
 import { ISSUE_PATH } from '../../../routes/constants/urls';
 import { ButtonTypeType } from '../../../styles/theme';
 import { Repo } from '../../../types/repo';
 import { formatComma } from '../../../utils/utils';
-import { Row, Button } from '../../atoms';
+import { Button, Typo } from '../../atoms';
+import * as Styled from './styles';
 
 interface Props {
 	repo: Repo;
 	isSelect?: boolean;
 }
-
-const RowView = styled(Row)`
-	display: flex;
-	justify-content: space-between;
-`;
 
 function RepoListItem({ repo, isSelect }: Props) {
 	const { repos: selectedRepo } = useRepo();
@@ -40,7 +34,7 @@ function RepoListItem({ repo, isSelect }: Props) {
 	};
 
 	return (
-		<RowView>
+		<Styled.RowView>
 			{isSelect && (
 				<div style={{ width: '10%' }}>
 					<img
@@ -55,49 +49,24 @@ function RepoListItem({ repo, isSelect }: Props) {
 					/>
 				</div>
 			)}
-			<div
-				style={{
-					width: isSelect ? '10%' : '15%',
-					display: 'flex',
-					justifyContent: 'center',
-					borderLeft: isSelect ? '1px solid' : 0,
-				}}
-			>
+			<Styled.ImageView isSelect={isSelect ?? false}>
 				<img src={repo.owner.avatar_url} width={20} height={20} alt="" />
-			</div>
-			<div
-				style={{
-					width: isSelect ? '35%' : '40%',
-					display: 'flex',
-					justifyContent: 'center',
-					borderLeft: '1px solid',
-				}}
-			>
+			</Styled.ImageView>
+			<Styled.BodyView isSelect={isSelect ?? false}>
 				{repo.full_name}
-			</div>
-			<div
-				style={{
-					width: '15%',
-					display: 'flex',
-					justifyContent: 'center',
-					borderLeft: '1px solid',
-				}}
-			>
+			</Styled.BodyView>
+			<Styled.ItemView width="10%">
+				<Typo>{repo.has_issues ? '이슈 있음' : '이슈 없음'}</Typo>
+			</Styled.ItemView>
+			<Styled.ItemView width="10%">
 				{strings.TEMPLATE_COUNT(formatComma(repo.forks_count))}
-			</div>
-			<Row
-				style={{
-					width: '30%',
-					display: 'flex',
-					justifyContent: 'center',
-					borderLeft: '1px solid',
-				}}
-			>
+			</Styled.ItemView>
+			<Styled.ButtonView>
 				<Button
 					size="small"
 					onClick={() => window.open(repo.html_url, '_blank')}
 				>
-					Github으로 이동
+					{strings.MOVE_TO_GITHUB}
 				</Button>
 				<Button
 					size="small"
@@ -105,11 +74,12 @@ function RepoListItem({ repo, isSelect }: Props) {
 					onClick={() =>
 						navigate({
 							pathname: ISSUE_PATH,
-							search: `?repo=${repo.full_name}`,
+							search: `?repo=${repo.full_name}&issueCount=${repo.open_issues_count}`,
 						})
 					}
+					disabled={!repo.has_issues}
 				>
-					issue 보기
+					{strings.MOVE_TO_ISSUE}
 				</Button>
 				<Button
 					size="small"
@@ -121,10 +91,12 @@ function RepoListItem({ repo, isSelect }: Props) {
 							: ButtonTypeType.PRIMARY
 					}
 				>
-					{selectedRepo.find((v) => v.id === repo.id) ? '삭제하기' : '등록하기'}
+					{selectedRepo.find((v) => v.id === repo.id)
+						? strings.DELETE
+						: strings.POST_ITEM}
 				</Button>
-			</Row>
-		</RowView>
+			</Styled.ButtonView>
+		</Styled.RowView>
 	);
 }
 

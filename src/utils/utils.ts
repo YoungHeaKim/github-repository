@@ -12,6 +12,6 @@ export const formatComma = (number?: number | string) => {
 
 export const formatDate = (value: string) => {
 	return `${new Date(value).getFullYear()}년
-	${new Date(value).getMonth()}월
-	${new Date(value).getDay()}일`;
+	${new Date(value).getMonth() + 1}월
+	${new Date(value).getDay() + 1}일`;
 };

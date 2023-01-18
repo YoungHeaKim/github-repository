@@ -4,10 +4,12 @@ import { Repo } from '../../../types/repo';
 
 export interface RepoState {
 	repos: Repo[];
+	search: string;
 }
 
 const initialState: RepoState = {
 	repos: [],
+	search: '',
 };
 
 export const repoSlice = createSlice({
@@ -26,12 +28,16 @@ export const repoSlice = createSlice({
 			// eslint-disable-next-line no-param-reassign
 			state.repos = [];
 		},
+		setSearch: (state, action: PayloadAction<string>) => {
+			// eslint-disable-next-line no-param-reassign
+			state.search = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(PURGE, () => initialState);
 	},
 });
 
-export const { setRepo, clearRepo } = repoSlice.actions;
+export const { setRepo, clearRepo, setSearch } = repoSlice.actions;
 
 export default repoSlice.reducer;

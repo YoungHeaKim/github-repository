@@ -104,8 +104,8 @@ const getTypo = (typo: TypoType) => {
 			break;
 		case 'h11':
 			fontWeight = '700';
-			fontSize = '12px';
-			lineHeight = '16px';
+			fontSize = '10px';
+			lineHeight = '14px';
 			break;
 		case 'hm1':
 			fontWeight = '500';

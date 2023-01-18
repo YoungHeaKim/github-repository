@@ -18,9 +18,7 @@ const DefaultLayoutContainer = styled.div<{ isOverflowHidden: boolean }>`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	max-width: 1440px;
 	margin: 0 auto;
-	border: 1px solid;
 
 	& > default-aside {
 		flex-shrink: 0;

@@ -6,8 +6,6 @@ const axiosInstance = axios.create({
 	baseURL: 'https://api.github.com', // 원래는 .env에서 관리
 });
 
-// github token: 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
-
 axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
 	if (!config.headers) {
 		config.headers = {};

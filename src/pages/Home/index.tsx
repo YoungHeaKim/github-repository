@@ -1,188 +1,135 @@
-import React, { useMemo, useState } from 'react';
-import { Octokit } from '@octokit/rest';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { isEmpty } from 'lodash';
-import styled from 'styled-components';
 import { Pagination } from 'antd';
-import ReactLoading from 'react-loading';
-import { Button, Input, Row } from '../../components/atoms';
+import { Input, Typo } from '../../components/atoms';
 import { DefaultLayOut } from '../../components/oraganisms';
-import { colors, commonReactQueryOptions, strings } from '../../constants';
-import { logError } from '../../utils/utils';
-import useDebounce from '../../hooks/useDebounce';
+import { RepoListItem, EmptyView } from '../../components/templates';
+import { commonReactQueryOptions, strings } from '../../constants';
+import { useDebounce, useRepoActions, useRepo } from '../../hooks';
 import { Repo } from '../../types/repo';
-import RepoListItem from '../../components/templates/RepoListItem';
-
-const Main = styled.main`
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	width: 100%;
-	height: 100%;
-	background: ${colors.GRAY7};
-	text-align: center;
-	margin: 20px 40px;
-`;
-
-const RowView = styled(Row)`
-	display: flex;
-	justify-content: space-between;
-`;
+import * as Styled from './styles';
+import { getRepos } from '../../apis';
+import { formatComma } from '../../utils/utils';
 
 function HomePage() {
-	const octokit = new Octokit();
-	const [search, setSearch] = useState<string>('');
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(10);
+	const [total, setTotal] = useState<number>(0);
+	const { search } = useRepo();
+	const { setSearch } = useRepoActions();
 	const [debounceSearch, setDebounceSearch] = useDebounce(search);
-
-	// eslint-disable-next-line consistent-return
-	const getRepos = async (): Promise<any> => {
-		try {
-			const response = await octokit.request(
-				'GET /search/repositories{?q,sort,order,per_page,page}',
-				{ q: debounceSearch, per_page: perPage, page },
-			);
-			return response.data;
-		} catch (err) {
-			logError(err);
-		}
-	};
 
 	const {
 		data: repos,
 		isFetching,
 		isLoading,
-	} = useQuery(['getRepos', debounceSearch, perPage, page], getRepos, {
-		...commonReactQueryOptions,
-		enabled: debounceSearch !== '',
-	});
+	} = useQuery(
+		['getRepos', debounceSearch, perPage, page],
+		() => getRepos({ debounceSearch, perPage, page }),
+		{
+			...commonReactQueryOptions,
+			onSuccess: (res) => {
+				if (total === 0) {
+					setTotal(res.total_count);
+				}
+			},
+			enabled: debounceSearch !== '',
+		},
+	);
 
-	const totalPage = useMemo(() => {
-		if (repos) {
-			return Math.floor(repos.total_count / perPage);
-		}
-		return 1;
-	}, [debounceSearch]);
+	const renderEmptyView = () => (
+		<EmptyView isLoading={isFetching || isLoading} />
+	);
 
-	const renderEmptyView = () =>
-		isLoading || isFetching ? (
-			<div
-				style={{
-					flex: 1,
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}
-			>
-				<ReactLoading type="balls" color="#0000FF" height={100} width={50} />
-			</div>
-		) : (
-			<li
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '100%',
-					padding: '10px 10px',
-				}}
-			>
-				데이터 없음
-			</li>
-		);
+	const handleSearch = (value: string) => {
+		setSearch(value);
+		setDebounceSearch(value);
+		setTotal(0);
+		setPage(1);
+	};
 
 	return (
 		<DefaultLayOut headerTitle="Home">
-			<header
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					margin: '10px 40px 0',
-				}}
-			>
-				<div style={{ width: '50%', position: 'relative', margin: '0 auto' }}>
+			<Styled.HeaderView>
+				<Styled.InputView>
 					<Input
 						value={search}
-						onChange={({ target }) => {
-							setSearch(target.value);
-							setDebounceSearch(target.value);
-						}}
+						onChange={({ target }) => handleSearch(target.value)}
 						name=""
 						type="text"
 						placeholder={strings.INPUT_PLACE_HOLDER}
 					/>
 					{search !== '' && (
-						<Button
-							style={{
-								backgroundColor: colors.NONE,
-								position: 'absolute',
-								top: 0,
-								right: 0,
-								color: colors.GRAY2,
-							}}
+						<Styled.ClearButton
 							size="small"
 							onClick={() => {
 								setSearch('');
 								setDebounceSearch('');
+								setTotal(0);
+								setPage(1);
 							}}
 						>
 							X
-						</Button>
+						</Styled.ClearButton>
 					)}
-				</div>
-			</header>
-			<Main>
-				<ul style={{ width: '100%' }}>
-					<li
-						style={{
-							borderBottom: '1px solid',
-							width: '100%',
-							padding: '10px 10px',
-						}}
-					>
-						<RowView>
-							<div style={{ width: '10%' }}>선택여부</div>
+				</Styled.InputView>
+				<Typo>
+					총 검색 개수:
+					<Typo typoType="h6">
+						{`   ${strings.TEMPLATE_COUNT(formatComma(total))}`}
+					</Typo>
+				</Typo>
+			</Styled.HeaderView>
+			<Styled.Main>
+				<Styled.UlView>
+					<Styled.ListItem>
+						<Styled.RowView>
+							<div style={{ width: '10%' }}>
+								<Typo typoType="h7">{strings.IS_POST}</Typo>
+							</div>
 							<div style={{ width: '10%', borderLeft: '1px solid' }}>
-								이미지
+								<Typo typoType="h7">{strings.IMAGE}</Typo>
 							</div>
-							<div style={{ width: '35%', borderLeft: '1px solid' }}>
-								Repository 이름
+							<div
+								style={{
+									width: '30%',
+									borderLeft: '1px solid',
+								}}
+							>
+								<Typo typoType="h7">{strings.REPO_NAME}</Typo>
 							</div>
-							<div style={{ width: '15%', borderLeft: '1px solid' }}>
-								Fork 수
+							<div style={{ width: '10%', borderLeft: '1px solid' }}>
+								<Typo typoType="h7">{strings.ISSUE_NAME}</Typo>
 							</div>
-							<div style={{ width: '30%', borderLeft: '1px solid' }}>버튼</div>
-						</RowView>
-					</li>
+							<div style={{ width: '10%', borderLeft: '1px solid' }}>
+								<Typo typoType="h7">{strings.FORK_NUM}</Typo>
+							</div>
+							<div style={{ width: '30%', borderLeft: '1px solid' }}>
+								<Typo typoType="h7">{strings.BUTTON}</Typo>
+							</div>
+						</Styled.RowView>
+					</Styled.ListItem>
 					{!isEmpty(repos)
 						? repos.items.map((item: Repo) => (
-								<li
-									key={item.id}
-									style={{
-										borderBottom: '1px solid',
-										width: '100%',
-										padding: '10px 10px',
-									}}
-								>
+								<Styled.ListItem key={item.id}>
 									<RepoListItem repo={item} isSelect />
-								</li>
+								</Styled.ListItem>
 						  ))
 						: renderEmptyView()}
-				</ul>
-				<div>
-					<Pagination
-						showSizeChanger
-						defaultCurrent={1}
-						onChange={setPage}
-						onShowSizeChange={(_, size) => setPerPage(size)}
-						current={page}
-						defaultPageSize={10}
-						pageSize={perPage}
-						total={totalPage}
-						locale={{ items_per_page: '개씩 보기' }}
-					/>
-				</div>
-			</Main>
+				</Styled.UlView>
+				<Pagination
+					showSizeChanger
+					defaultCurrent={1}
+					onChange={setPage}
+					onShowSizeChange={(_, size) => setPerPage(size)}
+					current={page}
+					defaultPageSize={10}
+					pageSize={perPage}
+					total={total}
+					locale={{ items_per_page: '개씩 보기' }}
+				/>
+			</Styled.Main>
 		</DefaultLayOut>
 	);
 }
