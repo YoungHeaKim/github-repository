@@ -65,7 +65,9 @@ function RepoListItem({ repo, isSelect }: Props) {
 				<Typo>{repo.has_issues ? '이슈 있음' : '이슈 없음'}</Typo>
 			</Styled.ItemView>
 			<Styled.ItemView width="10%">
-				{strings.TEMPLATE_COUNT(formatComma(repo.forks_count))}
+				{`${strings.TEMPLATE_COUNT(
+					formatComma(repo.forks_count),
+				)}/${strings.TEMPLATE_COUNT(formatComma(repo.stargazers_count))}`}
 			</Styled.ItemView>
 			<Styled.ButtonView>
 				<Button

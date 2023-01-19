@@ -10,7 +10,7 @@ export default {
 	POST_ITEM: '등록하기',
 	REPO_NAME: 'Repository 이름',
 	ISSUE_NAME: 'Issue 여부',
-	FORK_NUM: 'Fork 수',
+	FORK_NUM: 'Fork/Star 수',
 	BUTTON: '버튼',
 	IMAGE: '이미지',
 	IS_POST: '등록여부',

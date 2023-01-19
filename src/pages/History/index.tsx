@@ -5,6 +5,7 @@ import { Typo } from '../../components/atoms';
 import { DefaultLayOut } from '../../components/oraganisms';
 import { EmptyView } from '../../components/templates';
 import RepoListItem from '../../components/templates/RepoListItem';
+import { strings } from '../../constants';
 import useRepo from '../../hooks/useRepo';
 import { Repo } from '../../types/repo';
 import * as Styled from './styles';
@@ -44,7 +45,7 @@ function HistoryRepositoryPage() {
 									<Typo typoType="h7">Issue 여부</Typo>
 								</div>
 								<div style={{ width: '10%', borderLeft: '1px solid' }}>
-									<Typo typoType="h7">Fork 수</Typo>
+									<Typo typoType="h7">{strings.FORK_NUM}</Typo>
 								</div>
 								<div style={{ width: '30%', borderLeft: '1px solid' }}>
 									<Typo typoType="h7">버튼</Typo>

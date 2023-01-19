@@ -6,6 +6,7 @@ export interface Repo {
 	html_url: string;
 	has_issues: boolean;
 	open_issues_count: number;
+	stargazers_count: number;
 }
 
 export interface RepoIssue {
