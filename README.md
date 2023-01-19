@@ -9,6 +9,9 @@
 - React-query (axios 사용하여 api의 호출 시 캐시에 저장하기 위해 사용)
 - Github API(@octokit/rest)
 
+## 디자인
+Atomic 디자인을 사용하여 Component를 최소단위부터 구조 설계
+
 ## 기능
 - Github Repo이름 검색 기능
 - 내 웹에서 Repo 저장 삭제 기능 (저장은 최대 4개까지 가능)
@@ -18,3 +21,4 @@
 ## 구동 방법
 
 `Git clone https://github.com/YoungHeaKim/github-repository.git` -> `cd 프로젝트 이름` -> `npm i` -> `npm start` 
+
