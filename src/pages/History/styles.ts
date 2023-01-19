@@ -17,6 +17,13 @@ export const RowView = styled(Row)`
 	justify-content: space-between;
 `;
 
+export const Footer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+`;
+
 export const UlView = styled.ul`
 	border: 1px solid;
 	border-bottom: 0;

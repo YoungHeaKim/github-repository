@@ -1,37 +1,24 @@
 import { Pagination } from 'antd';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { getIssues } from '../../apis';
-import { Row, Typo } from '../../components/atoms';
+import { Button, Typo } from '../../components/atoms';
 import { DefaultLayOut } from '../../components/oraganisms';
 import { EmptyView } from '../../components/templates';
 import IssueListItem from '../../components/templates/IssueListItem';
 import RepoListItem from '../../components/templates/RepoListItem';
 import { strings } from '../../constants';
 import useRepo from '../../hooks/useRepo';
+import { HISTORY_PATH } from '../../routes/constants/urls';
+import { ButtonTypeType } from '../../styles/theme';
 import { Repo, RepoIssue } from '../../types/repo';
 import { formatComma } from '../../utils/utils';
 import * as Styled from './styles';
 
-const HeaderView = styled.header`
-	padding: 10px 40px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-`;
-
-const MainView = styled.main`
-	padding: 10px 40px;
-`;
-
-const RowView = styled(Row)`
-	justify-content: space-between;
-`;
-
 function RepositoryPage() {
 	const { repos } = useRepo();
+	const navigator = useNavigate();
 
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(10);
@@ -39,7 +26,10 @@ function RepositoryPage() {
 
 	const requests = repos.map((item) => {
 		const arr = item.full_name.split('/');
-		const response = getIssues({ repo: arr[0], name: arr[1] });
+		const response: Promise<RepoIssue[]> = getIssues({
+			repo: arr[0],
+			name: arr[1],
+		});
 		return response;
 	});
 
@@ -67,29 +57,22 @@ function RepositoryPage() {
 
 	return (
 		<DefaultLayOut headerTitle="등록된 Repository">
-			<HeaderView>
+			<Styled.HeaderView>
 				<Typo typoType="h3">Repository 리스트</Typo>
-			</HeaderView>
-			<MainView>
+				<Button
+					buttonType={ButtonTypeType.TEXT}
+					onClick={() => navigator(HISTORY_PATH)}
+				>
+					등록된 Repo 내역 보기
+				</Button>
+			</Styled.HeaderView>
+			<Styled.MainView>
 				{isEmpty(repos) ? (
 					renderEmptyView()
 				) : (
-					<ul
-						style={{
-							borderTop: '1px solid',
-							borderLeft: '1px solid',
-							borderRight: '1px solid',
-						}}
-					>
-						<li
-							style={{
-								borderBottom: '1px solid',
-								width: '100%',
-								padding: '10px 10px',
-								textAlign: 'center',
-							}}
-						>
-							<RowView>
+					<Styled.UlView>
+						<Styled.ListItem>
+							<Styled.RowView>
 								<div style={{ width: '15%' }}>
 									<Typo typoType="h7">이미지</Typo>
 								</div>
@@ -110,25 +93,18 @@ function RepositoryPage() {
 								<div style={{ width: '30%', borderLeft: '1px solid' }}>
 									<Typo typoType="h7">버튼</Typo>
 								</div>
-							</RowView>
-						</li>
+							</Styled.RowView>
+						</Styled.ListItem>
 						{repos.map((item: Repo) => (
-							<li
-								key={item.id}
-								style={{
-									borderBottom: '1px solid',
-									width: '100%',
-									padding: '10px 10px',
-								}}
-							>
+							<Styled.ListItem key={item.id}>
 								<RepoListItem repo={item} />
-							</li>
+							</Styled.ListItem>
 						))}
-					</ul>
+					</Styled.UlView>
 				)}
 
 				<main>
-					<HeaderView>
+					<Styled.HeaderView>
 						<Typo typoType="h3">Issue 리스트</Typo>
 						<Typo>
 							총 Issue 개수:
@@ -136,7 +112,7 @@ function RepositoryPage() {
 								formatComma(totalPage),
 							)}`}</Typo>
 						</Typo>
-					</HeaderView>
+					</Styled.HeaderView>
 					<Styled.UlView>
 						<Styled.ListItem>
 							<Styled.RowView>
@@ -186,7 +162,7 @@ function RepositoryPage() {
 						/>
 					</Styled.PaginationView>
 				</main>
-			</MainView>
+			</Styled.MainView>
 		</DefaultLayOut>
 	);
 }

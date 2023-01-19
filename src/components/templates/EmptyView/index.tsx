@@ -12,7 +12,7 @@ const LoadingView = styled.li`
 	justify-content: center;
 	flex: 1;
 	min-height: 500px;
-	border-bottom: 1px solid;
+	border: 1px solid;
 `;
 
 function EmptyView({ isLoading }: Props) {

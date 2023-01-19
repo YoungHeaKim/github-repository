@@ -16,16 +16,22 @@ interface Props {
 }
 
 function RepoListItem({ repo, isSelect }: Props) {
-	const { repos: selectedRepo } = useRepo();
-	const { setRepo } = useRepoActions();
 	const navigate = useNavigate();
+	const { repos: selectedRepo, historyRepos } = useRepo();
+	const { setRepo, setHistoryRepo } = useRepoActions();
 
 	const handleSelect = (value: Repo) => {
 		const selected: number = selectedRepo.findIndex(
 			(item) => item.id === value.id,
 		);
+		const historySelected: number = historyRepos.findIndex(
+			(item) => item.id === value.id,
+		);
 		if (selected === -1) {
 			setRepo([...selectedRepo, value]);
+			if (historySelected === -1) {
+				setHistoryRepo([...historyRepos, value]);
+			}
 		} else {
 			const copyRepo = selectedRepo.filter((item) => item.id !== value.id);
 

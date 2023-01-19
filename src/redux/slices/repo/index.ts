@@ -4,11 +4,13 @@ import { Repo } from '../../../types/repo';
 
 export interface RepoState {
 	repos: Repo[];
+	historyRepos: Repo[];
 	search: string;
 }
 
 const initialState: RepoState = {
 	repos: [],
+	historyRepos: [],
 	search: '',
 };
 
@@ -28,6 +30,10 @@ export const repoSlice = createSlice({
 			// eslint-disable-next-line no-param-reassign
 			state.repos = [];
 		},
+		setHistoryRepo: (state, action: PayloadAction<Repo[]>) => {
+			// eslint-disable-next-line no-param-reassign
+			state.historyRepos = action.payload;
+		},
 		setSearch: (state, action: PayloadAction<string>) => {
 			// eslint-disable-next-line no-param-reassign
 			state.search = action.payload;
@@ -38,6 +44,7 @@ export const repoSlice = createSlice({
 	},
 });
 
-export const { setRepo, clearRepo, setSearch } = repoSlice.actions;
+export const { setRepo, clearRepo, setSearch, setHistoryRepo } =
+	repoSlice.actions;
 
 export default repoSlice.reducer;
